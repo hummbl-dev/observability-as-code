@@ -32,3 +32,6 @@
 - Directory contract check: `docs/`, `schemas/`, `examples/`, `fixtures/valid/`, `fixtures/invalid/`, `receipts/`
 - Structural review against `hummbl-dev#70` and the shared v0.1 convention block
 - JSON syntax check: `python -m json.tool` on all new JSON payloads
+- JSON Schema validation: `python3` with `jsonschema.Draft202012Validator` against `schemas/observability-as-code-v0.1.json`
+  - `fixtures/valid/trace-contract-v0.1.valid.json`: passed with 0 validation errors
+  - `fixtures/invalid/trace-contract-v0.1.invalid.json`: failed as expected because `receiptRequirements.review` is required
