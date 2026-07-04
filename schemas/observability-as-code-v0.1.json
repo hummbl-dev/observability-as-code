@@ -70,10 +70,12 @@
           "required": ["id", "startCriteria", "reviewState"],
           "properties": {
             "id": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1
             },
             "startCriteria": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1
             },
             "reviewState": {
               "type": "string",
@@ -124,7 +126,8 @@
               "minimum": 1
             },
             "runbook": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1
             }
           },
           "additionalProperties": false
@@ -143,7 +146,8 @@
               "minimum": 10
             },
             "sliTarget": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1
             }
           },
           "additionalProperties": false
@@ -177,25 +181,32 @@
       "required": ["runIdentity", "trace", "eventSource", "evaluation", "alert", "review"],
       "properties": {
         "runIdentity": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "trace": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "eventSource": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "evaluation": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "alert": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "review": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "exception": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         }
       },
       "additionalProperties": false
