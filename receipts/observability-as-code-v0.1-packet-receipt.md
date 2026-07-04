@@ -3,7 +3,7 @@
 ## Packet identity
 
 - Repo: `observability-as-code`
-- Packet folder: `seed -> v0.1-draft`
+- Packet status: `seed -> v0.1-draft`
 - Scope source: `observability-as-code #4`
 - PR target: `chore/codex/observability-as-code-v0-1-packet-main` (this change set)
 

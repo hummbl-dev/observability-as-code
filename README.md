@@ -30,6 +30,7 @@
 - Schema: [`schemas/observability-as-code-v0.1.json`](schemas/observability-as-code-v0.1.json)
 - Example: [`examples/trace-contract-v0.1.example.json`](examples/trace-contract-v0.1.example.json)
 - Fixtures: [`fixtures/valid/trace-contract-v0.1.valid.json`](fixtures/valid/trace-contract-v0.1.valid.json), [`fixtures/invalid/trace-contract-v0.1.invalid.json`](fixtures/invalid/trace-contract-v0.1.invalid.json)
+- Receipt: [`receipts/observability-as-code-v0.1-packet-receipt.md`](receipts/observability-as-code-v0.1-packet-receipt.md)
 
 ## Status
 
