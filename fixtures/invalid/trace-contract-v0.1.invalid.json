@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "validated-example",
+  "observabilityManifest": {
+    "id": "observability-as-code/trace-contract-v1",
+    "title": "Invalid observability contract",
+    "version": 1,
+    "scope": "agent-runtime-visibility"
+  },
+  "authority": {
+    "owner": "observability-as-code",
+    "canActOnBehalfOf": ["platform-team"]
+  },
+  "observabilityContract": {
+    "runIdentity": {
+      "id": "trace-run-contract-v1",
+      "startCriteria": "start when synthetic trace fixture is ready",
+      "reviewState": "draft"
+    },
+    "traces": {
+      "spanSchemaVersion": "obs-span-v0.1",
+      "retentionDays": 14,
+      "minTraceLinkage": 1,
+      "events": [
+        "request.start",
+        "response.complete"
+      ]
+    },
+    "alerts": {
+      "enabled": true,
+      "criticalThreshold": 1,
+      "notifyAfterMinutes": 5,
+      "runbook": "runbook/trace-contract.md"
+    },
+    "rollup": {
+      "errorRateLimit": 0.05,
+      "latencyBudgetMs": 250,
+      "sliTarget": "99.0%"
+    },
+    "fixtures": {
+      "validationSamples": 1,
+      "validUntil": "2026-12-31T00:00:00Z",
+      "negativeCasesCovered": ["unreviewable-execution"]
+    }
+  },
+  "receiptRequirements": {
+    "runIdentity": "run-identity-receipt.v0.1",
+    "trace": "trace-receipt.v0.1",
+    "eventSource": "event-source-receipt.v0.1",
+    "evaluation": "evaluation-receipt.v0.1",
+    "alert": "alert-receipt.v0.1"
+  }
+}

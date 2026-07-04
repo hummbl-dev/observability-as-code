@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "v0.1-draft",
+  "observabilityManifest": {
+    "id": "observability-as-code/trace-contract-v1",
+    "title": "Starter observability contract for agentic work",
+    "version": 1,
+    "scope": "agent-runtime-visibility",
+    "description": "Minimal packet describing trace, alert, and evaluation contract boundaries."
+  },
+  "authority": {
+    "owner": "observability-as-code",
+    "canActOnBehalfOf": ["ops", "agent_ops"]
+  },
+  "observabilityContract": {
+    "runIdentity": {
+      "id": "trace-run-contract-v1",
+      "startCriteria": "run-start event with request-id and actor-id",
+      "reviewState": "reviewed"
+    },
+    "traces": {
+      "spanSchemaVersion": "obs-span-v0.1",
+      "retentionDays": 30,
+      "minTraceLinkage": 2,
+      "events": [
+        "request.start",
+        "model.select",
+        "policy.check",
+        "response.complete"
+      ]
+    },
+    "alerts": {
+      "enabled": true,
+      "criticalThreshold": 2,
+      "notifyAfterMinutes": 15,
+      "runbook": "runbooks/agent-runtime-threshold.md"
+    },
+    "rollup": {
+      "errorRateLimit": 0.02,
+      "latencyBudgetMs": 1500,
+      "sliTarget": "SLO: <2% model failures for non-critical flows"
+    },
+    "fixtures": {
+      "validationSamples": 3,
+      "validUntil": "2027-01-01T00:00:00Z",
+      "negativeCasesCovered": ["missing-trace-id", "alert-without-runbook", "event-schema-drift"]
+    }
+  },
+  "receiptRequirements": {
+    "runIdentity": "run-identity-receipt.v0.1",
+    "trace": "trace-receipt.v0.1",
+    "eventSource": "event-source-receipt.v0.1",
+    "evaluation": "evaluation-receipt.v0.1",
+    "alert": "alert-receipt.v0.1",
+    "review": "review-receipt.v0.1",
+    "exception": "exception-receipt.v0.1"
+  },
+  "adjacentRepos": [
+    "agent-as-code",
+    "model-routing-as-code",
+    "governance-as-code",
+    "security-as-code"
+  ]
+}
