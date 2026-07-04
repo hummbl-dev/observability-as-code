@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "validated-example",
+  "observabilityManifest": {
+    "id": "observability-as-code/trace-contract-v1",
+    "title": "Invalid observability contract",
+    "version": 0,
+    "scope": "agent-runtime-visibility"
+  },
+  "authority": {
+    "owner": "observability-as-code",
+    "canActOnBehalfOf": []
+  },
+  "observabilityContract": {
+    "runIdentity": {
+      "id": "trace-run-contract-v1",
+      "startCriteria": "",
+      "reviewState": "draft"
+    },
+    "traces": {
+      "spanSchemaVersion": "obs-span-v0.1",
+      "retentionDays": 0,
+      "minTraceLinkage": 0,
+      "events": [
+        "invalid.event"
+      ]
+    },
+    "alerts": {
+      "enabled": true,
+      "criticalThreshold": 0,
+      "notifyAfterMinutes": 0,
+      "runbook": ""
+    },
+    "rollup": {
+      "errorRateLimit": -0.1,
+      "latencyBudgetMs": 5,
+      "sliTarget": ""
+    },
+    "fixtures": {
+      "validationSamples": 0,
+      "validUntil": "2023-01-01T00:00:00Z",
+      "negativeCasesCovered": []
+    }
+  },
+  "receiptRequirements": {
+    "runIdentity": "",
+    "trace": "trace-receipt.v0.1",
+    "eventSource": "",
+    "evaluation": "evaluation-receipt.v0.1",
+    "alert": "",
+    "review": "review-receipt.v0.1"
+  }
+}

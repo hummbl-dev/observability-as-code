@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/hummbl-dev/observability-as-code/main/schemas/observability-as-code-v0.1.json",
+  "title": "Observability-as-Code v0.1 Packet",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "packetStatus",
+    "observabilityManifest",
+    "authority",
+    "observabilityContract",
+    "receiptRequirements"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "v0.1"
+    },
+    "packetStatus": {
+      "type": "string",
+      "enum": ["seed", "v0.1-draft", "validated-example", "v0.1-packet"]
+    },
+    "observabilityManifest": {
+      "type": "object",
+      "required": ["id", "title", "version", "scope"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9\\-]*/[a-z0-9][a-z0-9\\-]*$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scope": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "required": ["owner", "canActOnBehalfOf"],
+      "properties": {
+        "owner": {
+          "type": "string"
+        },
+        "canActOnBehalfOf": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "observabilityContract": {
+      "type": "object",
+      "required": ["runIdentity", "traces", "alerts", "rollup", "fixtures"],
+      "properties": {
+        "runIdentity": {
+          "type": "object",
+          "required": ["id", "startCriteria", "reviewState"],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "startCriteria": {
+              "type": "string"
+            },
+            "reviewState": {
+              "type": "string",
+              "enum": ["draft", "reviewed", "blocked", "accepted"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "traces": {
+          "type": "object",
+          "required": ["spanSchemaVersion", "retentionDays", "minTraceLinkage", "events"],
+          "properties": {
+            "spanSchemaVersion": {
+              "type": "string"
+            },
+            "retentionDays": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "minTraceLinkage": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "events": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "enum": ["request.start", "model.select", "policy.check", "routing.choice", "response.complete", "error.emit"]
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "alerts": {
+          "type": "object",
+          "required": ["enabled", "criticalThreshold", "notifyAfterMinutes", "runbook"],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "criticalThreshold": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "notifyAfterMinutes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "runbook": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "rollup": {
+          "type": "object",
+          "required": ["errorRateLimit", "latencyBudgetMs", "sliTarget"],
+          "properties": {
+            "errorRateLimit": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "latencyBudgetMs": {
+              "type": "integer",
+              "minimum": 10
+            },
+            "sliTarget": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "fixtures": {
+          "type": "object",
+          "required": ["validationSamples", "validUntil", "negativeCasesCovered"],
+          "properties": {
+            "validationSamples": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "validUntil": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "negativeCasesCovered": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "receiptRequirements": {
+      "type": "object",
+      "required": ["runIdentity", "trace", "eventSource", "evaluation", "alert", "review"],
+      "properties": {
+        "runIdentity": {
+          "type": "string"
+        },
+        "trace": {
+          "type": "string"
+        },
+        "eventSource": {
+          "type": "string"
+        },
+        "evaluation": {
+          "type": "string"
+        },
+        "alert": {
+          "type": "string"
+        },
+        "review": {
+          "type": "string"
+        },
+        "exception": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "adjacentRepos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
