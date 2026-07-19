@@ -89,14 +89,14 @@ Provide valid and invalid/example event streams for:
 
 - [x] Metric and event contracts documented (3 metric categories, 10 alerts, 9 dimensions)
 - [x] 10 fixtures defined
-- [ ] Metric and event contracts are vendor-neutral and receipt-driven
-- [ ] Alert semantics distinguish informational, warning, blocking, and incident signals
-- [ ] No private prompt/output content is required for company-level telemetry
-- [ ] Cost and quality remain joined; spend alone cannot determine route quality
-- [ ] Promotion expiry and benchmark staleness are first-class signals
-- [ ] Silent paid fallback is detectable
-- [ ] Example dashboard/scorecard specification
-- [ ] Compatibility note for existing observability v0.1 boundary
+- [x] Metric and event contracts are vendor-neutral and receipt-driven
+- [x] Alert semantics distinguish informational, warning, blocking, and incident signals
+- [x] No private prompt/output content is required for company-level telemetry
+- [x] Cost and quality remain joined; spend alone cannot determine route quality
+- [x] Promotion expiry and benchmark staleness are first-class signals
+- [x] Silent paid fallback is detectable
+- [x] Example dashboard/scorecard specification shows company, task-class, and route views
+- [x] Compatibility note for existing observability v0.1 boundary
 
 ## Non-goals
 

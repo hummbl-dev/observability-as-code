@@ -1,0 +1,12 @@
+{
+  "scenario": "unexpected-premium-model-use",
+  "description": "Unexpected premium-model use: premium model used outside approved task scope",
+  "events": [
+    {"type": "request.start", "taskClass": "casual-chat", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06", "premium": true},
+    {"type": "routing.choice", "routeDecisionRef": "rd-006", "promotionDisposition": "candidate", "approvedTaskScopes": ["evidence-synthesis", "medical-verification"]},
+    {"type": "policy.check", "privacyClass": "internal", "authorityProfile": "operator:reuben", "passed": true},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.50}
+  ],
+  "expectedAlerts": ["premium-model-outside-scope"]
+}

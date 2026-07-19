@@ -1,0 +1,12 @@
+{
+  "scenario": "version-alias-drift",
+  "description": "Version/alias drift: observed model/version differs from selected route",
+  "events": [
+    {"type": "request.start", "taskClass": "research-summarization", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "routing.choice", "routeDecisionRef": "rd-009", "promotionDisposition": "promoted", "selectedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "metric.observe", "metric": "alias-version-drift", "observedModelVersion": "gpt-4o-2024-12-01", "selectedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.42}
+  ],
+  "expectedAlerts": ["observed-model-differs-from-selected"]
+}

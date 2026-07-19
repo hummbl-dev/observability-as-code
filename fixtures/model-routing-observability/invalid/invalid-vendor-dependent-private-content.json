@@ -1,0 +1,74 @@
+{
+  "_adv_expected_failure": "vendor-dependent metrics, missing required alerts, private content marker",
+  "schemaVersion": "model-routing-observability/v0.1",
+  "packetStatus": "candidate",
+  "dimensions": {
+    "taskClass": {
+      "description": "Task class",
+      "noPrivateContent": false
+    },
+    "runtimeBackendZone": {
+      "description": "Runtime backend zone"
+    },
+    "providerModelVersion": {
+      "description": "Provider model version"
+    },
+    "routePolicyVersion": {
+      "description": "Route policy version"
+    },
+    "promotionDisposition": {
+      "description": "Promotion disposition"
+    },
+    "productConsumer": {
+      "description": "Product consumer storing raw_prompt for debugging",
+      "noPrivateContent": false
+    },
+    "privacyConsequenceClass": {
+      "description": "Privacy consequence class"
+    },
+    "benchmarkEvidenceDate": {
+      "description": "Benchmark evidence date"
+    },
+    "receiptSchemaVersion": {
+      "description": "Receipt schema version"
+    }
+  },
+  "metrics": {
+    "economics": [
+      {
+        "name": "spend-by-provider",
+        "description": "Spend from datadog_api",
+        "receiptDriven": false
+      }
+    ],
+    "qualityReliability": [
+      {
+        "name": "acceptance-rate",
+        "description": "Acceptance rate from newrelic",
+        "receiptDriven": false
+      }
+    ],
+    "governanceLifecycle": [
+      {
+        "name": "policy-drift",
+        "description": "Policy drift from grafana_api",
+        "receiptDriven": false
+      }
+    ]
+  },
+  "alerts": [
+    {
+      "name": "budget-ceiling-breach",
+      "description": "Budget breach",
+      "severity": "warning",
+      "receiptDriven": false
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "test-fixture",
+      "type": "valid",
+      "description": "Test fixture with raw_prompt content"
+    }
+  ]
+}

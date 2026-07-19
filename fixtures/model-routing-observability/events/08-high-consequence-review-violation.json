@@ -1,0 +1,12 @@
+{
+  "scenario": "high-consequence-review-violation",
+  "description": "High-consequence review violation: accepted without required human review",
+  "events": [
+    {"type": "request.start", "taskClass": "medical-claim-verification", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "routing.choice", "routeDecisionRef": "rd-008", "promotionDisposition": "candidate"},
+    {"type": "policy.check", "privacyClass": "restricted", "authorityProfile": "operator:reuben", "passed": true, "humanReviewRequired": true, "humanReviewCompleted": false},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.50}
+  ],
+  "expectedAlerts": ["high-consequence-no-review"]
+}

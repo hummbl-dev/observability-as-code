@@ -1,0 +1,13 @@
+{
+  "scenario": "local-route-authorized-paid-fallback",
+  "description": "Local route with authorized paid fallback: fallback used with explicit authorization",
+  "events": [
+    {"type": "request.start", "taskClass": "evidence-synthesis", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "local", "modelId": "llama3", "resolvedModelVersion": "llama3-8b-instruct-q4_0", "runtimeClass": "local"},
+    {"type": "routing.choice", "routeDecisionRef": "rd-003", "fallbackAuthorized": true},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06", "fallbackReason": "local-model-timeout", "fallbackAuthorized": true},
+    {"type": "policy.check", "privacyClass": "internal", "authorityProfile": "operator:reuben", "passed": true},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.30, "costPerAcceptedGovernedOutcome": 0.30}
+  ],
+  "expectedAlerts": []
+}

@@ -1,0 +1,12 @@
+{
+  "scenario": "normal-scoped-promoted-route",
+  "description": "Normal scoped promoted route: route selected, executed, accepted, no alerts",
+  "events": [
+    {"type": "request.start", "taskClass": "research-summarization", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "policy.check", "privacyClass": "internal", "authorityProfile": "operator:reuben", "passed": true},
+    {"type": "routing.choice", "routeDecisionRef": "rd-001", "promotionDisposition": "promoted", "benchmarkEvidenceDate": "2026-07-15"},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.42, "costPerAcceptedGovernedOutcome": 0.42}
+  ],
+  "expectedAlerts": []
+}

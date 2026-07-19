@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/hummbl-dev/observability-as-code/main/schemas/model-routing-observability-v0.1.json",
+  "title": "Model-Routing Observability v0.1",
+  "description": "Vendor-neutral observability contracts for HUMMBL model/runtime routing. Consumes route and execution receipts; does not select models or alter production routing. No private prompt/output content is required for company-level telemetry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packetStatus",
+    "dimensions",
+    "metrics",
+    "alerts",
+    "fixtures"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "model-routing-observability/v0.1"
+    },
+    "packetStatus": {
+      "type": "string",
+      "enum": ["candidate", "reviewed", "adopted", "deprecated"]
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "taskClass",
+        "runtimeBackendZone",
+        "providerModelVersion",
+        "routePolicyVersion",
+        "promotionDisposition",
+        "productConsumer",
+        "privacyConsequenceClass",
+        "benchmarkEvidenceDate",
+        "receiptSchemaVersion"
+      ],
+      "properties": {
+        "taskClass": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description", "noPrivateContent"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 },
+            "noPrivateContent": { "type": "boolean", "description": "No private prompt/output content stored for this dimension." }
+          }
+        },
+        "runtimeBackendZone": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 }
+          }
+        },
+        "providerModelVersion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 }
+          }
+        },
+        "routePolicyVersion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 }
+          }
+        },
+        "promotionDisposition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 }
+          }
+        },
+        "productConsumer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description", "noPrivateContent"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 },
+            "noPrivateContent": { "type": "boolean", "description": "Product/consumer dimension must not store private user content." }
+          }
+        },
+        "privacyConsequenceClass": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 }
+          }
+        },
+        "benchmarkEvidenceDate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 }
+          }
+        },
+        "receiptSchemaVersion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description"],
+          "properties": {
+            "description": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["economics", "qualityReliability", "governanceLifecycle"],
+      "properties": {
+        "economics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "description", "receiptDriven"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string", "minLength": 1 },
+              "receiptDriven": { "type": "boolean", "description": "Metric is derived from execution receipts, not vendor telemetry APIs." }
+            }
+          }
+        },
+        "qualityReliability": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "description", "receiptDriven"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string", "minLength": 1 },
+              "receiptDriven": { "type": "boolean" }
+            }
+          }
+        },
+        "governanceLifecycle": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "description", "receiptDriven"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string", "minLength": 1 },
+              "receiptDriven": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "alerts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description", "severity", "receiptDriven"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 1 },
+          "severity": {
+            "type": "string",
+            "enum": ["informational", "warning", "blocking", "incident"],
+            "description": "Alert severity distinguishes informational, warning, blocking, and incident signals."
+          },
+          "receiptDriven": { "type": "boolean", "description": "Alert is derived from receipt data, not vendor-specific APIs." },
+          "detectionRule": { "type": "string", "description": "Optional deterministic detection rule description." }
+        }
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "type", "description"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "enum": ["valid", "invalid", "example"] },
+          "description": { "type": "string", "minLength": 1 },
+          "expectedAlerts": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  }
+}

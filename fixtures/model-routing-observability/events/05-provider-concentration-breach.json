@@ -1,0 +1,12 @@
+{
+  "scenario": "provider-concentration-breach",
+  "description": "Provider concentration breach: one provider exceeds declared threshold",
+  "events": [
+    {"type": "request.start", "taskClass": "research-summarization", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "routing.choice", "routeDecisionRef": "rd-005", "promotionDisposition": "promoted"},
+    {"type": "metric.observe", "metric": "provider-concentration", "provider": "openai", "share": 0.85, "threshold": 0.70},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.42}
+  ],
+  "expectedAlerts": ["provider-concentration-breach"]
+}

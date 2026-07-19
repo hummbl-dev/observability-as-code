@@ -1,0 +1,273 @@
+{
+  "schemaVersion": "model-routing-observability/v0.1",
+  "packetStatus": "candidate",
+  "dimensions": {
+    "taskClass": {
+      "description": "Task/workload class and version (e.g. research-summarization, code-review)",
+      "noPrivateContent": true
+    },
+    "runtimeBackendZone": {
+      "description": "Runtime/backend/zone (e.g. us-east-1, local-workstation)"
+    },
+    "providerModelVersion": {
+      "description": "Provider/model/resolved version (e.g. openai/gpt-4o-2024-08-06)"
+    },
+    "routePolicyVersion": {
+      "description": "Routing policy version reference"
+    },
+    "promotionDisposition": {
+      "description": "Promotion disposition (candidate, promoted, expired, rolled-back)"
+    },
+    "productConsumer": {
+      "description": "Product/consumer identifier without storing private user content",
+      "noPrivateContent": true
+    },
+    "privacyConsequenceClass": {
+      "description": "Privacy class (public/internal/restricted/sensitive) and consequence class"
+    },
+    "benchmarkEvidenceDate": {
+      "description": "Date of the benchmark evidence used for route decisions"
+    },
+    "receiptSchemaVersion": {
+      "description": "Receipt schema/version used by the execution receipt"
+    }
+  },
+  "metrics": {
+    "economics": [
+      {
+        "name": "spend-by-provider-model-runtime",
+        "description": "Spend aggregated by provider, model, runtime, task class, product, and environment",
+        "receiptDriven": true
+      },
+      {
+        "name": "cost-per-accepted-governed-outcome",
+        "description": "Total cost divided by accepted governed outcomes",
+        "receiptDriven": true
+      },
+      {
+        "name": "rejected-failed-attempt-cost",
+        "description": "Cost retained from rejected and failed attempts",
+        "receiptDriven": true
+      },
+      {
+        "name": "reviewer-human-correction-burden",
+        "description": "Reviewer model and human correction burden in minutes and cost",
+        "receiptDriven": true
+      },
+      {
+        "name": "batch-cache-local-utilization",
+        "description": "Batch, cache, and local-route utilization rates",
+        "receiptDriven": true
+      },
+      {
+        "name": "premium-route-frequency",
+        "description": "Premium-route frequency and avoidable-premium estimate",
+        "receiptDriven": true
+      }
+    ],
+    "qualityReliability": [
+      {
+        "name": "acceptance-partial-rejection-failure-rollback-rates",
+        "description": "Outcome status rates (accepted, partial, rejected, failed, rolled_back)",
+        "receiptDriven": true
+      },
+      {
+        "name": "correctness-source-grounding-results",
+        "description": "Correctness and source-grounding result rates",
+        "receiptDriven": true
+      },
+      {
+        "name": "unsupported-claim-rate",
+        "description": "Rate of unsupported claims in outputs",
+        "receiptDriven": true
+      },
+      {
+        "name": "tool-call-argument-accuracy",
+        "description": "Tool-call and argument accuracy",
+        "receiptDriven": true
+      },
+      {
+        "name": "retry-fallback-escalation-rate",
+        "description": "Retry, fallback, and escalation rates",
+        "receiptDriven": true
+      },
+      {
+        "name": "latency-timeout-distributions",
+        "description": "Latency and timeout distributions",
+        "receiptDriven": true
+      },
+      {
+        "name": "receipt-completeness",
+        "description": "Receipt completeness rate",
+        "receiptDriven": true
+      }
+    ],
+    "governanceLifecycle": [
+      {
+        "name": "privacy-authority-gate-failures",
+        "description": "Privacy and authority gate failure count",
+        "receiptDriven": true
+      },
+      {
+        "name": "missing-independent-review",
+        "description": "Count of high-consequence tasks missing independent review",
+        "receiptDriven": true
+      },
+      {
+        "name": "stale-benchmark-evidence",
+        "description": "Count of routes with stale benchmark evidence (first-class signal)",
+        "receiptDriven": true
+      },
+      {
+        "name": "route-promotion-expiry",
+        "description": "Count of route promotions that have expired (first-class signal)",
+        "receiptDriven": true
+      },
+      {
+        "name": "alias-version-drift",
+        "description": "Count of alias/version drift events",
+        "receiptDriven": true
+      },
+      {
+        "name": "provider-concentration",
+        "description": "Provider share and concentration metric",
+        "receiptDriven": true
+      },
+      {
+        "name": "routing-policy-version-drift",
+        "description": "Count of routing-policy version drift events",
+        "receiptDriven": true
+      },
+      {
+        "name": "unexpected-production-default-changes",
+        "description": "Count of unexpected production default route changes",
+        "receiptDriven": true
+      }
+    ]
+  },
+  "alerts": [
+    {
+      "name": "budget-ceiling-breach",
+      "description": "Spend exceeds declared budget ceiling",
+      "severity": "blocking",
+      "receiptDriven": true,
+      "detectionRule": "sum(spend) > budget_ceiling"
+    },
+    {
+      "name": "premium-model-outside-scope",
+      "description": "Premium model used outside approved task scope",
+      "severity": "warning",
+      "receiptDriven": true
+    },
+    {
+      "name": "promoted-route-evidence-expired",
+      "description": "Promoted route evidence has expired or is stale",
+      "severity": "blocking",
+      "receiptDriven": true
+    },
+    {
+      "name": "failure-rate-exceeds-threshold",
+      "description": "Failure/retry/rollback rate exceeds declared threshold",
+      "severity": "warning",
+      "receiptDriven": true
+    },
+    {
+      "name": "provider-concentration-breach",
+      "description": "Provider share exceeds concentration threshold",
+      "severity": "warning",
+      "receiptDriven": true
+    },
+    {
+      "name": "route-decision-missing-metadata",
+      "description": "Route decision lacks price, benchmark, privacy, authority, or expiry metadata",
+      "severity": "blocking",
+      "receiptDriven": true
+    },
+    {
+      "name": "observed-model-differs-from-selected",
+      "description": "Observed model/version differs from the selected route",
+      "severity": "incident",
+      "receiptDriven": true
+    },
+    {
+      "name": "cost-arithmetic-reconciliation-failure",
+      "description": "Cost arithmetic fails reconciliation",
+      "severity": "incident",
+      "receiptDriven": true
+    },
+    {
+      "name": "silent-paid-fallback",
+      "description": "Local/free lane silently falls back to paid cloud",
+      "severity": "incident",
+      "receiptDriven": true
+    },
+    {
+      "name": "high-consequence-no-review",
+      "description": "High-consequence task accepted without required review",
+      "severity": "blocking",
+      "receiptDriven": true
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "normal-scoped-promoted-route",
+      "type": "valid",
+      "description": "Normal scoped promoted route event stream",
+      "expectedAlerts": []
+    },
+    {
+      "name": "local-route-no-paid-fallback",
+      "type": "valid",
+      "description": "Local route with no paid fallback",
+      "expectedAlerts": []
+    },
+    {
+      "name": "local-route-authorized-paid-fallback",
+      "type": "valid",
+      "description": "Local route with authorized paid fallback",
+      "expectedAlerts": []
+    },
+    {
+      "name": "stale-promotion",
+      "type": "invalid",
+      "description": "Stale promotion event stream",
+      "expectedAlerts": ["promoted-route-evidence-expired"]
+    },
+    {
+      "name": "provider-concentration-breach",
+      "type": "invalid",
+      "description": "Provider concentration breach event stream",
+      "expectedAlerts": ["provider-concentration-breach"]
+    },
+    {
+      "name": "unexpected-premium-model-use",
+      "type": "invalid",
+      "description": "Unexpected premium-model use event stream",
+      "expectedAlerts": ["premium-model-outside-scope"]
+    },
+    {
+      "name": "failed-task-retained-cost",
+      "type": "valid",
+      "description": "Failed task with retained cost event stream",
+      "expectedAlerts": []
+    },
+    {
+      "name": "high-consequence-review-violation",
+      "type": "invalid",
+      "description": "High-consequence review violation event stream",
+      "expectedAlerts": ["high-consequence-no-review"]
+    },
+    {
+      "name": "version-alias-drift",
+      "type": "invalid",
+      "description": "Version/alias drift event stream",
+      "expectedAlerts": ["observed-model-differs-from-selected"]
+    },
+    {
+      "name": "incomplete-economic-receipt",
+      "type": "invalid",
+      "description": "Incomplete economic receipt event stream",
+      "expectedAlerts": ["cost-arithmetic-reconciliation-failure"]
+    }
+  ]
+}
