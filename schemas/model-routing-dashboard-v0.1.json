@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/hummbl-dev/observability-as-code/main/schemas/model-routing-dashboard-v0.1.json",
+  "title": "Model-Routing Dashboard/Scorecard Specification v0.1",
+  "description": "Vendor-neutral dashboard and scorecard specification showing company, task-class, and route views. Consumes receipt-driven metrics; does not require vendor-specific telemetry APIs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "dashboardId",
+    "views",
+    "panels",
+    "dataSources"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "model-routing-dashboard/v0.1"
+    },
+    "dashboardId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "views": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description", "groupBy"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": ["company", "task-class", "route"],
+            "description": "Dashboard view level: company-wide, per task-class, or per route."
+          },
+          "description": { "type": "string", "minLength": 1 },
+          "groupBy": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "panels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "metricCategory", "view", "displayType"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "metricCategory": {
+            "type": "string",
+            "enum": ["economics", "qualityReliability", "governanceLifecycle"]
+          },
+          "view": {
+            "type": "string",
+            "enum": ["company", "task-class", "route"]
+          },
+          "displayType": {
+            "type": "string",
+            "enum": ["table", "time-series", "bar-chart", "scorecard", "heatmap"]
+          },
+          "metrics": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "alertOverlay": { "type": "boolean" },
+          "costQualityJoined": {
+            "type": "boolean",
+            "description": "Panel must join cost and quality; spend alone cannot determine route quality."
+          }
+        }
+      }
+    },
+    "dataSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptDriven", "vendorNeutral"],
+      "properties": {
+        "receiptDriven": {
+          "type": "boolean",
+          "description": "All data sources are derived from execution receipts, not vendor APIs."
+        },
+        "vendorNeutral": {
+          "type": "boolean",
+          "description": "No vendor-specific telemetry API is required."
+        },
+        "receiptSchemaRefs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

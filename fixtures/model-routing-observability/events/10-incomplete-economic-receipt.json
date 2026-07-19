@@ -1,0 +1,12 @@
+{
+  "scenario": "incomplete-economic-receipt",
+  "description": "Incomplete economic receipt: cost arithmetic fails reconciliation",
+  "events": [
+    {"type": "request.start", "taskClass": "research-summarization", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "routing.choice", "routeDecisionRef": "rd-010", "promotionDisposition": "candidate"},
+    {"type": "policy.check", "privacyClass": "internal", "authorityProfile": "operator:reuben", "passed": true},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.42, "modelAndToolSubtotal": 0.42, "reviewerModelSubtotal": 0.30, "totalEstimatedExecutionCost": 0.42, "reconciliationFailed": true}
+  ],
+  "expectedAlerts": ["cost-arithmetic-reconciliation-failure"]
+}

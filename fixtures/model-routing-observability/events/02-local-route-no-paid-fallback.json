@@ -1,0 +1,12 @@
+{
+  "scenario": "local-route-no-paid-fallback",
+  "description": "Local route with no paid fallback: local model used, zero paid cost",
+  "events": [
+    {"type": "request.start", "taskClass": "code-review", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "local", "modelId": "llama3", "resolvedModelVersion": "llama3-8b-instruct-q4_0", "runtimeClass": "local", "hardware": "RTX-4090-24GB"},
+    {"type": "policy.check", "privacyClass": "internal", "authorityProfile": "operator:reuben", "passed": true},
+    {"type": "routing.choice", "routeDecisionRef": "rd-002", "promotionDisposition": "candidate"},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.05, "costPerAcceptedGovernedOutcome": 0.05}
+  ],
+  "expectedAlerts": []
+}

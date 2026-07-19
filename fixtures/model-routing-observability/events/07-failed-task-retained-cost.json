@@ -1,0 +1,12 @@
+{
+  "scenario": "failed-task-retained-cost",
+  "description": "Failed task with retained cost: failed attempt cost is part of total economics",
+  "events": [
+    {"type": "request.start", "taskClass": "hypothesis-generation", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "routing.choice", "routeDecisionRef": "rd-007", "promotionDisposition": "candidate"},
+    {"type": "policy.check", "privacyClass": "internal", "authorityProfile": "operator:reuben", "passed": true},
+    {"type": "response.complete", "outcome": "failed", "cost": 0.18, "costRetained": true, "costPerAcceptedGovernedOutcome": "not_applicable"}
+  ],
+  "expectedAlerts": []
+}

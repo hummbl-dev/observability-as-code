@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "model-routing-dashboard/v0.1",
+  "dashboardId": "model-routing-scorecard-v1",
+  "title": "Model-Routing Scorecard: Cost, Quality, and Governance",
+  "views": [
+    {
+      "name": "company",
+      "description": "Company-wide view of routing spend, quality, and governance signals",
+      "groupBy": ["provider", "runtimeClass", "environment"]
+    },
+    {
+      "name": "task-class",
+      "description": "Per task-class view showing cost-per-accepted-governed-outcome and quality rates",
+      "groupBy": ["taskClass", "taskFixtureVersion"]
+    },
+    {
+      "name": "route",
+      "description": "Per route view showing promotion disposition, benchmark freshness, and drift",
+      "groupBy": ["provider", "modelId", "resolvedModelVersion", "routePolicyVersion"]
+    }
+  ],
+  "panels": [
+    {
+      "name": "Spend by Provider",
+      "metricCategory": "economics",
+      "view": "company",
+      "displayType": "bar-chart",
+      "metrics": ["spend-by-provider-model-runtime"],
+      "alertOverlay": true,
+      "costQualityJoined": true
+    },
+    {
+      "name": "Cost per Accepted Governed Outcome",
+      "metricCategory": "economics",
+      "view": "task-class",
+      "displayType": "scorecard",
+      "metrics": ["cost-per-accepted-governed-outcome"],
+      "alertOverlay": true,
+      "costQualityJoined": true
+    },
+    {
+      "name": "Outcome Rates by Task Class",
+      "metricCategory": "qualityReliability",
+      "view": "task-class",
+      "displayType": "table",
+      "metrics": ["acceptance-partial-rejection-failure-rollback-rates", "correctness-source-grounding-results"],
+      "alertOverlay": true,
+      "costQualityJoined": true
+    },
+    {
+      "name": "Promotion Expiry and Benchmark Staleness",
+      "metricCategory": "governanceLifecycle",
+      "view": "route",
+      "displayType": "heatmap",
+      "metrics": ["route-promotion-expiry", "stale-benchmark-evidence"],
+      "alertOverlay": true,
+      "costQualityJoined": false
+    },
+    {
+      "name": "Provider Concentration",
+      "metricCategory": "governanceLifecycle",
+      "view": "company",
+      "displayType": "gauge",
+      "metrics": ["provider-concentration"],
+      "alertOverlay": true,
+      "costQualityJoined": false
+    },
+    {
+      "name": "Route Quality Scorecard",
+      "metricCategory": "qualityReliability",
+      "view": "route",
+      "displayType": "scorecard",
+      "metrics": ["unsupported-claim-rate", "retry-fallback-escalation-rate", "receipt-completeness"],
+      "alertOverlay": true,
+      "costQualityJoined": true
+    },
+    {
+      "name": "Latency and Timeout Distributions",
+      "metricCategory": "qualityReliability",
+      "view": "route",
+      "displayType": "time-series",
+      "metrics": ["latency-timeout-distributions"],
+      "alertOverlay": true,
+      "costQualityJoined": false
+    }
+  ],
+  "dataSources": {
+    "receiptDriven": true,
+    "vendorNeutral": true,
+    "receiptSchemaRefs": [
+      "https://github.com/hummbl-dev/execution-receipts/blob/main/schemas/model-route-economic-receipt-v0.1.json"
+    ]
+  }
+}

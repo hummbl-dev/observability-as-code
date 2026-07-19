@@ -1,0 +1,12 @@
+{
+  "scenario": "stale-promotion",
+  "description": "Stale promotion: promoted route evidence has expired",
+  "events": [
+    {"type": "request.start", "taskClass": "research-summarization", "routePolicyVersion": "v0.2"},
+    {"type": "model.select", "provider": "openai", "modelId": "gpt-4o", "resolvedModelVersion": "gpt-4o-2024-08-06"},
+    {"type": "routing.choice", "routeDecisionRef": "rd-004", "promotionDisposition": "promoted", "benchmarkEvidenceDate": "2025-01-15", "promotionExpiryDate": "2026-01-15"},
+    {"type": "policy.check", "privacyClass": "internal", "authorityProfile": "operator:reuben", "passed": true},
+    {"type": "response.complete", "outcome": "accepted", "cost": 0.42}
+  ],
+  "expectedAlerts": ["promoted-route-evidence-expired"]
+}
